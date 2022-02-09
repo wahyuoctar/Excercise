@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+  <body>
+    <style>
+      table,
+      td,
+      th {
+        border-collapse: collapse;
+        border: 1px solid black;
+      }
+    </style>
+    <fieldset>
+      <legend>Employee Information</legend>
+      <label for="fname">First Name:</label>
+      <input type="text" id="fname" name="fname" placeholder="Wahyu" />
+      <br />
+      <br />
+      <label for="lname">Last Name:</label>
+      <input type="text" id="lname" name="lname" placeholder="Octa" />
+      <br />
+      <br />
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" placeholder="email@gmail.com" />
+      <br />
+      <br />
+      <label for="age">Age:</label>
+      <input type="number" id="age" name="age" placeholder="17" />
+      <br />
+      <br />
+      <label for="occupation">Occupation</label>
+      <select id="occupation">
+        <option>Software Developer</option>
+        <option>UI/UX</option>
+        <option>Digital Marketer</option>
+        <option>Data Scientist</option>
+      </select>
+      <br />
+      <br />
+      <button onclick="addData()">Create Data</button>
+    </fieldset>
+
+    <br />
+
+    <table>
+      <caption>
+        Employee Database
+      </caption>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Age</th>
+          <th>Occupation</th>
+          <th colspan="2">Action</th>
+        </tr>
+      </thead>
+
+      <tbody id="tableData">
+        <!-- <tr>
+          <td>1</td>
+          <td>John Doe</td>
+          <td>John@mail.com</td>
+          <td>29</td>
+          <td>Software Developer</td>
+          <td><button>Edit</button></td>
+          <td><button>Delete</button></td>
+        </tr> -->
+      </tbody>
+    </table>
+
+    <br />
+    <br />
+
+    <fieldset>
+      <legend>Search Employee</legend>
+      <label for="searchName">Employee Name:</label>
+      <input type="text" id="searchName" name="searchName" />
+      <br />
+      <br />
+      <label for="searchOccupation">Occupation</label>
+      <select id="searchOccupation">
+        <option>All Occupations</option>
+        <option>Software Developer</option>
+        <option>UI/UX</option>
+        <option>Digital Marketer</option>
+        <option>Data Scientist</option>
+      </select>
+      <br />
+      <br />
+      <button onclick="renderSearch()">Search Employee</button>
+    </fieldset>
+
+    <table>
+      <caption>
+        Search Results
+      </caption>
+      <thead>
+        <tr>
+          <th>No</th>
+          <th>Name</th>
+          <th>Email</th>
+          <th>Age</th>
+          <th>Occupation</th>
+        </tr>
+      </thead>
+
+      <tbody id="searchData">
+        <!-- <tr>
+          <td>1</td>
+          <td>John Doe</td>
+          <td>John@mail.com</td>
+          <td>29</td>
+          <td>Software Developer</td>
+        </tr> -->
+      </tbody>
+    </table>
+  
+    <script>
+      class Person{
+    constructor({firstName, lastName, email, age, occupation}){
+        this.firstName = firstName,
+        this.lastName = lastName,
+        this.email = email,
+        this.age = age
+        this.occupation = occupation
+    }
+}
+
+let data = [
+    new Person({firstName: "John", lastName: "Doe", email: "John@mail.com", age: 29, occupation: "Software Developer"})
+]
+
+let searchData = []
+
+
+function renderData(editIndex){
+
+    let htmlResult = ""
+    
+    data.forEach((val, index) => {
+    if(index == editIndex) {
+        htmlResult+= `
+        <tr>
+          <td>${index + 1}</td>
+          <td>
+          <input id="editFirstName" value="${val.firstName}">
+          <input id="editLastName" value="${val.lastName}">
+          </td>
+    
+          <td><label for="editEmail">
+          <input id="editEmail" value="${val.email}">
+          </label></td>
+    
+          <td><label for="editAge">
+          <input id="editAge" value="${val.age}">
+          </editAge></td>
+    
+          <td><label for="editOccupation">
+          <select id="editOccupation">
+            <option ${val.occupation == "Software Developer" ? "selected": ""}>Software Developer</option>
+            <option ${val.occupation == "UI/UX" ? "selected": ""}>UI/UX</option>
+            <option ${val.occupation == "Digital Marketer" ? "selected": ""}>Digital Marketer</option>
+            <option ${val.occupation == "Data Scientist" ? "selected": ""}>Data Scientist</option>
+          </select></label></td>
+    
+          <td><button onclick="saveData(${index})">Save</button></td>
+          <td><button onclick="renderData()">Cancel</button></td>
+        </tr>
+        `
+    }
+    else{
+        htmlResult+= `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${val.firstName} ${val.lastName}</td>
+          <td>${val.email}</td>
+          <td>${val.age}</td>
+          <td>${val.occupation}</td>
+          <td><button onclick="renderData(${index})">Edit</button></td>
+          <td><button onclick="deleteData(${index})">Delete</button></td>
+        </tr>
+        `
+    }
+    })
+    document.getElementById("tableData").innerHTML = htmlResult
+}
+
+renderData()
+
+function addData(){
+    let firstNameInput = document.getElementById("fname").value
+    let lastNameInput = document.getElementById("lname").value
+    let emailInput = document.getElementById("email").value
+    let ageInput = document.getElementById("age").value
+    ageInput = parseInt(ageInput)
+    let occupationInput = document.getElementById("occupation").value
+
+    if (!firstNameInput || !lastNameInput || !emailInput || !ageInput) {
+        alert("Field Harus Diisi!");
+        return;
+      }
+
+    const newData = {
+        firstName: firstNameInput,
+        lastName: lastNameInput,
+        email: emailInput,
+        age: ageInput,
+        occupation: occupationInput
+    }
+    data.push(newData)
+
+    renderData()
+
+    document.getElementById("fname").value = ""
+    document.getElementById("lname").value = ""
+    document.getElementById("email").value = ""
+    document.getElementById("age").value = ""
+}
+
+
+function deleteData(deleteIndex){
+    data.splice(deleteIndex, 1)
+    renderData()
+}
+
+function saveData(editIndex){
+    let firstNameInput = document.getElementById("editFirstName").value
+    let lastNameInput = document.getElementById("editLastName").value
+    let emailInput = document.getElementById("editEmail").value
+    let ageInput = document.getElementById("editAge").value
+    ageInput = parseInt(ageInput)
+    let occupationInput = document.getElementById("editOccupation").value
+
+    data[editIndex].firstName = firstNameInput
+    data[editIndex].lastName = lastNameInput
+    data[editIndex].email = emailInput
+    data[editIndex].age = ageInput
+    data[editIndex].occupation = occupationInput
+
+    renderData()
+}
+
+function renderSearch(){
+    const searchByName = document.getElementById("searchName").value
+    const searchByOccupation = document.getElementById("searchOccupation").value
+
+    let searchResult = ""
+    data.forEach((val, index) =>{
+
+        if(val.firstName.toLowerCase().includes(searchByName.toLowerCase()) && 
+        val.occupation.includes(searchByOccupation)){
+        searchResult += `
+        <tr>
+          <td>${index + 1}</td>
+          <td>${val.firstName} ${val.lastName}</td>
+          <td>${val.email}</td>
+          <td>${val.age}</td>
+          <td>${val.occupation}</td>
+        </tr>
+        `
+        }
+    })
+    document.getElementById("searchData").innerHTML = searchResult
+}
+
+    </script>
+  </body>
+</html>
