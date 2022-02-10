@@ -256,7 +256,7 @@ function renderSearch(){
 
     let searchResult = ""
     data.forEach((val, index) =>{
-
+      // Method includes menghasil kata data type boolean
         if(val.firstName.toLowerCase().includes(searchByName.toLowerCase()) && 
         val.occupation.includes(searchByOccupation)){
         searchResult += `
