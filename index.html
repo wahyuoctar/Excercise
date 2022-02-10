@@ -86,7 +86,7 @@
       <br />
       <label for="searchOccupation">Occupation</label>
       <select id="searchOccupation">
-        <option>All Occupations</option>
+        <option value="">All Occupations</option>
         <option>Software Developer</option>
         <option>UI/UX</option>
         <option>Digital Marketer</option>
@@ -134,7 +134,10 @@
 }
 
 let data = [
-    new Person({firstName: "John", lastName: "Doe", email: "John@mail.com", age: 29, occupation: "Software Developer"})
+        new Person({firstName: "Mark", lastName: "Cuban", email: "mark@mail.com", age: 17, occupation: "Software Developer"}),
+        new Person({firstName: "Steve", lastName: "Kerr", email: "steve@mail.com", age: 21, occupation: "Digital Marketer"}),
+        new Person({firstName: "Bill", lastName: "Russel", email: "bill@mail.com", age: 13, occupation: "UI/UX"}),
+        new Person({firstName: "Seto", lastName: "Kaiba", email: "seto@mail.com", age: 30, occupation: "Data Scientist"}),
 ]
 
 let searchData = []
