@@ -50,7 +50,7 @@
 
   <script>
     class Product{
-      constructor({image, productName, price, stockQuantity, cartQuantity}){
+      constructor({image, productName, price, stockQuantity}){
         this.image = image
         this.productName = productName
         this.price = price
@@ -84,43 +84,60 @@
         <td>Rp ${val.price.toLocaleString()}</td>
         <td>${val.stockQuantity}</td>
         <td>${val.cartQuantity}</td>
-        <td><button class="btn btn-secondary" id="kurangQuantity">-</button></td>
-        <td><button class="btn btn-secondary" id="tambahQuantity" onclick="buyQuantity()">+</button></td>
+        <td><button class="btn btn-secondary" id="kurangQuantity" onclick="removeQuantity(${idx})">-</button></td>
+        <td><button class="btn btn-secondary" id="tambahQuantity" value="1" onclick="buyQuantity(${idx})">+</button></td>
       </tr>`
       })
       document.getElementById("body").innerHTML = htmlResult
     }
 
-  function buyQuantity(){
+  function buyQuantity(idx){
+
+      if(data[idx].cartQuantity < data[idx].stockQuantity){
+       data[idx].cartQuantity++
+      }
+      else if(data[idx].cartQuantity >= data[idx].stockQuantity){
+        alert(`Barang melebihi stock yang tersedia!`)
+        
+      }
     
-    data.forEach((val, idx)=>{
-      return val.cartQuantity + 1
-    })
     
-    function incrementValue(){
-    var value = parseInt(document.getElementById('tambahQuantity').value, 10);
-    value = isNaN(value) ? 0 : value;
-    value++;
-    document.getElementById('tambahQuantity').value = value;
+    
     renderData()
 }
+
+  function removeQuantity(idx){
+    
+    if(data[idx].cartQuantity > 0){
+       data[idx].cartQuantity--
+      }
+      if(data[idx].cartQuantity <= 0){
+        alert(`Barang tidak bisa dikurang lagi!`)
+      }
+    
+  
     renderData()
 
   }
+    renderData()
 
   function checkOut(){
     let totalBelanja = 0
 
     data.forEach((val, idx)=>{
-      return totalBelanja += val.cartQuantity * val.price
+      val.stockQuantity = val.stockQuantity - val.cartQuantity
+      totalBelanja += val.cartQuantity * val.price
+
+      val.cartQuantity = 0
     })
 
     let hasilBelanja = `<h3> Total Belanja Anda: Rp ${totalBelanja.toLocaleString()},- </h3>`
     document.getElementById("totalCheckout").innerHTML = hasilBelanja
-
+    
+    
+    renderData()
   }
   
-    renderData()
   </script>
 </body>
 </html>
