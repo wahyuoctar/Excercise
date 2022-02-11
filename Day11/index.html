@@ -78,9 +78,9 @@
       </select>
       <br />
       <br />
-      <button onclick="sortByName()">Sort Employee By Name</button>
-      <button onclick="sortByAge()">Sort Employee By Age</button>
-      <button onclick="resetSort()">Reset Sort</button>
+      <button onclick="sortData(`fullName`)">Sort Employee By Name</button>
+      <button onclick="sortData(`age`)">Sort Employee By Age</button>
+      <button onclick="sortData()">Reset Sort</button>
     </fieldset>
 
     <table>
@@ -177,16 +177,21 @@
         renderData(filteredData);
       };
 
-      function sortByName(){
+      function sortData(sortKey){
         const sortDir = document.getElementById("sortDir").value
         const copyEmployeeDatabase = [...employeeDatabase]
 
+        if(!sortKey){
+          renderData(employeeDatabase)
+          return
+        }
+
         if(sortDir == "asc"){
         copyEmployeeDatabase.sort((a, b) =>{
-          if(a.fullName > b.fullName){
+          if(a[sortKey] > b[sortKey]){
             return 1
           }
-          else if(a.fullName < b.fullName){
+          else if(a[sortKey] < b[sortKey]){
             return -1
           }
           return 0
@@ -194,10 +199,10 @@
         }
         else if(sortDir == "desc"){
           copyEmployeeDatabase.sort((a, b) =>{
-          if(a.fullName > b.fullName){
+          if(a[sortKey] > b[sortKey]){
             return -1
           }
-          else if(a.fullName < b.fullName){
+          else if(a[sortKey] < b[sortKey]){
             return 1
           }
           return 0
@@ -206,40 +211,7 @@
 
         renderData(copyEmployeeDatabase)
       }
-
-      function sortByAge(){
-        const sortDir = document.getElementById("sortDir").value
-        const copyEmployeeDatabase = [...employeeDatabase]
-
-        if(sortDir == "asc"){
-        copyEmployeeDatabase.sort((a, b) =>{
-          if(a.age > b.age){
-            return 1
-          }
-          else if(a.age < b.age){
-            return -1
-          }
-          return 0
-        })
-        }
-        else if(sortDir == "desc"){
-          copyEmployeeDatabase.sort((a, b) =>{
-          if(a.age > b.age){
-            return -1
-          }
-          else if(a.age < b.age){
-            return 1
-          }
-          return 0
-        })
-      }
-      renderData(copyEmployeeDatabase)
-    }
-
-      function resetSort(){
-        renderData(employeeDatabase)
-      }
-          
+     
     </script>
   </body>
 </html>
