@@ -46,11 +46,10 @@ console.log(findAge);
 // ----- duplicate Find -----
 
 const duplicateFind = (arr, callback) =>{
-    let resultArr = []
     for(let i = 0; i < arr.length; i++){
         if(callback(arr[i], i, arr)){
             
-            return resultArr = arr[i]
+            return arr[i]
         }
     }
 }
