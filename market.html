@@ -19,8 +19,8 @@
         <th colspan="2">Cart Actions</th>
       </tr>
     </thead>
-    <tbody>
-      <tr style="vertical-align: middle;">
+    <tbody id="body">
+      <!-- <tr style="vertical-align: middle;">
         <td><img width="100px" src="https://d29c1z66frfv6c.cloudfront.net/pub/media/catalog/product/large/444b6b8e6d40c8249766694731048fb0b5d22eca_xxl-1.jpg"></td>
         <td>Premium Cotton T-Shirt</td>
         <td>Rp 379,900</td>
@@ -37,7 +37,7 @@
         <td>0</td>
         <td><button class="btn btn-secondary">-</button></td>
         <td><button class="btn btn-secondary">+</button></td>
-      </tr>
+      </tr> -->
     </tbody>
   </table>
   <center>
@@ -71,8 +71,27 @@
       stockQuantity: 10,
       cartQuantity: 0}
       
-    ] 
+    ]
 
+    function renderData(){
+      let htmlResult = ""
+
+      data.forEach((val, idx) =>{
+        htmlResult += `
+        <tr style="vertical-align: middle;">
+        <td><img width="100px" src=${val.image}></td>
+        <td>${val.productName}</td>
+        <td>Rp ${val.price.toLocaleString()}</td>
+        <td>${val.stockQuantity}</td>
+        <td>${val.cartQuantity}</td>
+        <td><button class="btn btn-secondary">-</button></td>
+        <td><button class="btn btn-secondary">+</button></td>
+      </tr>`
+      })
+      document.getElementById("body").innerHTML = htmlResult
+    }
+
+    renderData()
   </script>
 </body>
 </html>
