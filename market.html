@@ -41,10 +41,10 @@
     </tbody>
   </table>
   <center>
-    <button class="btn btn-success">Checkout</button>
+    <button class="btn btn-success" onclick="checkOut()">Checkout</button>
     <br>
     <br>
-    <h3 id="totalBelanja">Total Belanja anda: Rp. 100,000</h3>
+    <h3 id="totalCheckout"></h3>
   </center>
 
 
@@ -84,13 +84,42 @@
         <td>Rp ${val.price.toLocaleString()}</td>
         <td>${val.stockQuantity}</td>
         <td>${val.cartQuantity}</td>
-        <td><button class="btn btn-secondary">-</button></td>
-        <td><button class="btn btn-secondary">+</button></td>
+        <td><button class="btn btn-secondary" id="kurangQuantity">-</button></td>
+        <td><button class="btn btn-secondary" id="tambahQuantity" onclick="buyQuantity()">+</button></td>
       </tr>`
       })
       document.getElementById("body").innerHTML = htmlResult
     }
 
+  function buyQuantity(){
+    
+    data.forEach((val, idx)=>{
+      return val.cartQuantity + 1
+    })
+    
+    function incrementValue(){
+    var value = parseInt(document.getElementById('tambahQuantity').value, 10);
+    value = isNaN(value) ? 0 : value;
+    value++;
+    document.getElementById('tambahQuantity').value = value;
+    renderData()
+}
+    renderData()
+
+  }
+
+  function checkOut(){
+    let totalBelanja = 0
+
+    data.forEach((val, idx)=>{
+      return totalBelanja += val.cartQuantity * val.price
+    })
+
+    let hasilBelanja = `<h3> Total Belanja Anda: Rp ${totalBelanja.toLocaleString()},- </h3>`
+    document.getElementById("totalCheckout").innerHTML = hasilBelanja
+
+  }
+  
     renderData()
   </script>
 </body>
