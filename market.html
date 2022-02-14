@@ -183,13 +183,13 @@
 
       document.getElementById("checkout").innerHTML = `<h3>Total belanjaan anda: Rp ${totalPrice.toLocaleString()},- </h3>
       <input type="number" id="wallet" placeholder="Masukkan Jumlah Uang Anda">
-      <button class="btn btn-success" onclick="pembayaran()">PAY</button>
-      <button class="btn btn-danger" onclick="renderData()">CANCEL</button>
+      <button class="btn btn-success" onclick="payButton()">PAY</button>
+      <button class="btn btn-danger" onclick="cancelButton()">CANCEL</button>
       <h1>Sisa Waktu Anda: <span id="countDown">60</span></h1>`
       renderData()
     }
 
-    function pembayaran(){
+    function payButton(){
       let totalPrice = 0
       let yourChange = 0
       function refresh(message){
@@ -221,6 +221,12 @@
       }
       else {alert(`Uang Anda Kurang Rp ${(totalPrice - totalWallet).toLocaleString()},-`)}
       
+    }
+
+    function cancelButton(){
+      renderData()
+      stopTimeOut()
+      let noCheckout = document.getElementById("checkout").innerHTML = ""
     }
 
     function stopTimeOut(){
