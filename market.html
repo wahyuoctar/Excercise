@@ -161,12 +161,18 @@
     //     alert("Quantity cart tidak boleh kurang dari 0")
     //   }
     // }
+    
     let timeOut
     
     const checkout = () => {
       let totalPrice = 0
       let counter = 60
       
+      productDatabase.forEach((val, idx) => {
+      if(val.cartQuantity == 0){
+        renderData()
+      }
+      else{
       timeOut = setInterval(() => {
         counter--
         document.getElementById("countDown").innerHTML = counter
@@ -187,6 +193,8 @@
       <button class="btn btn-danger" onclick="cancelButton()">CANCEL</button>
       <h1>Sisa Waktu Anda: <span id="countDown">60</span></h1>`
       renderData()
+      }})
+
     }
 
     function payButton(){
